@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Web config</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style type="text/css">
+	body{
+		margin: 0px 0px 0px 0px;
+		background-color: #B7C2C7;
+	}
+	
+	header {
+		/*float:top;*/	
+		width:100%;
+		/*overflow:hidden;*/
+		background:#000000;
+		padding-top:10px;	
+		padding-bottom:10px;	
+	}
+	
+	#manuf{
+		/*float:center;*/
+		text-align: center;
+		margin:0 auto;		
+		font-family: Verdana;		
+		color: white;
+		font-size:40px;
+		font-weight:bold;
+	}
+	
+	#prod{
+		/*float:center;*/
+		text-align: center;		
+		margin:0 auto;			
+		font-family: Lucida Console;		
+		color: white;
+		font-size:30px;
+		font-weight:bold;
+	}
+	
+	.menu{
+		width:100%;
+		
+		background:green;
+	}
+	
+	nav {
+		width:100%;
+		float:center;
+		text-align:center;
+		/*margin-right:20px;*/
+		background:green;
+		padding-top:10px;	
+		padding-bottom:10px;	
+	}
+	
+	nav a {
+		margin-top:5px;
+		margin-bottom:5px;
+		display:inline-block;
+		color:#fff;
+		text-decoration:none;
+		padding:10px 20px;
+		line-height:normal;
+		font-size:20px;
+		font-weight:bold;
+		-webkit-transition:all 500ms ease;
+		-o-transition:all 500ms ease;
+		transition:all 500ms ease;
+		margin-right:50px;
+		margin-left:50px;
+	}
+	
+	nav a:hover {
+		background: #0D430A;
+		border-radius:50px;
+	}
+
+	.inf{
+		padding-left: 20px;
+	}
+	
+	#conn_status{
+		padding-left: 20px;
+	}
+	
+	#wifi_status{
+		padding-left: 20px;
+	}
+	
+	.connect{
+		margin: 0 auto;
+		text-align: center;
+	}
+	
+	.scan{
+		margin: 0 auto;
+		text-align: center;
+	}
+	
+	.buttonScan, .buttonConnect{
+		display: inline-block;
+	 	border: none;
+	 	color: #FFF;
+	 	border-radius: 4px;
+	 	-webkit-border-radius: 4px;
+	 	-moz-border-radius: 4px;
+	 	font-family: Verdana;
+	 	width: auto;
+	 	height: auto;
+	 	font-size: 16px;
+	 	padding: 10px 40px;
+	 	box-shadow: inset 0px 1px 1px 0 #90ADD2,0px 5px 0px 0 #223955,0px 8px 5px 0 #B3B3B3;
+	 	-moz-box-shadow: inset 0px 1px 1px 0 #90ADD2,0px 5px 0px 0 #223955,0px 8px 5px 0 #B3B3B3;
+	 	-webkit-box-shadow: inset 0px 1px 1px 0 #90ADD2,0px 5px 0px 0 #223955,0px 8px 5px 0 #B3B3B3;
+	 	text-shadow: 0 1px 0 #48576D;
+	 	background-image: linear-gradient(to top, #5884BC, #395e8d);
+	 	background-color: #4471a9;
+	 	margin: 30px 40px 30px 40px;
+	}
+	
+	.buttonScan:hover, .buttonScan:active, .buttonConnect:hover, .buttonConnect:active{
+		border: none;
+	 	color: #FFF;
+	 	box-shadow: inset 0px 1px 0px 0 #90ADD2,0px 2px 0px 0 #223955,0px 4px 3px 0 #6B6B6B;
+	 	-moz-box-shadow: inset 0px 1px 0px 0 #90ADD2,0px 2px 0px 0 #223955,0px 4px 3px 0 #6B6B6B;
+	 	-webkit-box-shadow: inset 0px 1px 0px 0 #90ADD2,0px 2px 0px 0 #223955,0px 4px 3px 0 #6B6B6B;
+	 	background-color: #395e8d;
+	}
+	
+	.inputSsidConnect, .inputPassConnect{
+		font-size: 16px;
+	  	padding: 10px;
+	  	border: solid 5px #c9c9c9;
+	  	transition: border 0.3s;
+	  	margin: 30px 40px 30px 40px;
+	}
+	
+	.inputSsidConnect:focus, .inputSsidConnect.focus, .inputPassConnect:focus, .inputPassConnect.focus{
+	  	border: solid 5px #969696;
+	}
+
+	#tableScan{
+		font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+		font-size:14px;
+		background:#B7C2C7;
+		width:60%;
+		border-collapse:collapse;
+		text-align:left;
+		margin: 50px auto;
+	}
+	
+	#tableScan th{
+		font-size:14px;
+		font-weight:normal;
+		color:#039;
+		border-bottom:2px solid #6678b1;
+		padding:10px 8px;
+	}
+	
+	#tableScan td{
+		color:black;
+		padding:9px 8px 0;
+	}
+	
+	#tableScan tbody tr:hover td{
+		color:#009;
+	}
+	
+	input[type=radio] {
+	    border: 0px;
+	    margin: 0px auto;
+	    width: 20px;
+	    height: 2em;
+	}
+	
+	@media screen and (max-width: 800px) {
+		#tableScan{
+			width:100%;
+		}
+	}
+</style>
+
+<script>
+	
+//	var extfile = ".cgi"	// coloca la extension para los pedidos a Ellie
+	var extfile = ""
+	
+	function	loadInfo()
+	{
+		var xmlhttp;
+		xmlhttp=new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200)) {
+	    		var jsonResponse = xmlhttp.responseText;
+	    		var objeto_json = JSON.parse(jsonResponse);
+	    		var info_firmware = objeto_json.Version.firmware;
+	    		var info_hardware = objeto_json.Version.hardware;
+	
+	    		var c = '';
+	    		c = '<div class="inf">';
+	    		c += '<h2>Informaci&oacute;n del Producto</h2>';
+	    		c += '<hr/>';
+	    		c += '<h3>Versi&oacute;n de Firmware: ' + info_firmware + '<br>';
+	    		c += 'Versi&oacute;n de Hardware: ' + info_hardware + '<br>';
+	    		c += '</div>';
+	    		document.getElementById("div1").innerHTML = c;
+	    		document.getElementById("div2").innerHTML = '';	    		
+			}
+		}
+	
+		xmlhttp.open('GET','/client' + extfile + '?command=info');
+		xmlhttp.send();
+	}
+	
+	function scanMakeTable(totalpage)
+	{	
+		var c = '';
+		var indexRow = 0;
+		
+		c += '<div class="connect">';
+	   c += '<input class="inputSsidConnect" id="SsidConnect" placeholder="SSID" type="text" value="">';
+	   c += '<input class="inputPassConnect" id="PassConnect" placeholder="Contrase&#241;a" type="password" value="">';
+	   c += '<button class="buttonConnect" onclick="ConnectAP()"/>Conectar</button>';
+	   c += '</div>';
+	   c += '<hr/>';
+		c += '<div class="scan">';
+	   c += '<button class="buttonScan" onclick="scanAP()">Scan</button>';
+	   c += '</div>';
+		c += '<table id="tableScan" summary="Result Scan AP"">';
+		c += '<thead>';
+		c += '<tr>';
+		c += '<th scope="col" align="center">Selec.</th>';
+		c += '<th scope="col">SSID</th>';
+		c += '<th scope="col" align="center">Canal</th>';
+		c += '<th scope="col" align="center">Seg.</th>';
+		c += '</tr>';
+		c += '</thead>';
+		c += '<tbody>';
+		c += '<form>';
+					
+		for(var i = 0; i < parseInt(totalpage); i++){		
+			var xmlhttp;
+			xmlhttp=new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {			
+				if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200)) {				
+		    		var jsonResponse = xmlhttp.responseText;
+		    		var objeto_json = JSON.parse(jsonResponse);
+		    		var scanResult = objeto_json.Response.ScanResult;
+					
+					for(var j = 0; j < scanResult.length; j++){
+						c += '<tr>';
+						c += '<td  align="center" onclick="loadSSIDSelected(' + indexRow.toString() + ');"><input type="radio" name="selectSSID" id=' + j.toString() + '></td>';
+						c += '<td>' + objeto_json.Response.ScanResult[j].ssid + '</td>';
+						c += '<td align="center">' + objeto_json.Response.ScanResult[j].channel + '</td>';
+						if(objeto_json.Response.ScanResult[j].authmode != 'OPEN')
+							c += '<td align="center">X</td>';
+						else
+							c += '<td align="center">O</td>';
+						c += '</tr>';
+						indexRow++;												
+					}													
+				}
+			}
+		
+			xmlhttp.open('GET', '/client' + extfile + '?command=scan&page=' + (i + 1).toString() , false);		
+			xmlhttp.send();
+		}
+		
+		c += '</form>';
+		c += '</tbody>';
+		c += '</table>';
+		document.getElementById("div2").innerHTML = c;
+	}
+	
+	function loadSSIDSelected(row)
+	{
+		var oTable = document.getElementById('tableScan');
+		var rowLength = oTable.rows.length;
+		var oCells = oTable.rows.item(row + 1).cells;
+		var cellVal = oCells.item(1).innerHTML;
+	   var inputSSID = document.getElementById("SsidConnect");
+	   inputSSID.value = cellVal;
+	}
+	
+	function scanAP()
+	{
+		var xmlhttp;
+		xmlhttp=new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200)) {
+	    		var jsonResponse = xmlhttp.responseText;
+	    		var objeto_json = JSON.parse(jsonResponse);
+	    		var scanTotalPage = objeto_json.Response.TotalPage;
+				
+				scanMakeTable(scanTotalPage)  		
+			}
+		}
+	
+		xmlhttp.open('GET','/client' + extfile + '?command=scan');
+		xmlhttp.send();
+	}
+	
+	function ConnectAP()
+	{
+		var inputSSID = document.getElementById("SsidConnect");
+		var inputPASS = document.getElementById("PassConnect");
+		//alert(inputSSID.value + ' ' + inputPASS.value);
+		
+		
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.open('POST', '/config' + extfile + '?command=wifi', true);
+		xmlhttp.setRequestHeader("Content-type", "application/json");
+		xmlhttp.onreadystatechange = function () { 
+		    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+		        /*alert(inputSSID.value + ' ' + inputPASS.value);*/
+		    }
+		}
+		var data = JSON.stringify({Request:{Station:{Connect_Station:{ssid:inputSSID.value, password:inputPASS.value}}}});		
+		xmlhttp.send(data);
+	}
+	
+	function loadStatus(){
+		var xmlhttp;
+		xmlhttp=new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200)) {
+	    		var jsonResponse = xmlhttp.responseText;
+	    		var objeto_json = JSON.parse(jsonResponse);
+	    		var status = objeto_json.Status.status;
+				
+	    		var c = '';
+	    		c = '<h3>Estado: ' + status + '</h3>';
+	    		document.getElementById("conn_status").innerHTML = c;
+	    		
+	    		var reloadStatus = setTimeout("loadStatus();", 500);
+			}
+		}		
+		
+		xmlhttp.open('GET','/client' + extfile + '?command=status');
+		xmlhttp.send();		
+	}
+	
+	function loadWiFiConfg(){
+		var xmlhttp;
+		xmlhttp=new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200)) {
+	    		var jsonResponse = xmlhttp.responseText;
+	    		var objeto_json = JSON.parse(jsonResponse);
+	    		var configSSID = objeto_json.Response.Station.Connect_Station.ssid;
+	    		var stationIP = objeto_json.Response.Station.Ipinfo_Station.ip;
+	    		var stationMask = objeto_json.Response.Station.Ipinfo_Station.mask;
+	    		var stationGateway = objeto_json.Response.Station.Ipinfo_Station.gw;
+				
+	    		var c = '';
+	    		c = '<h3>SSID:  ' + configSSID + '<br>IP: ' + stationIP + '<br>Mask: ' + stationMask + '<br>Gateway: ' + stationGateway + '</h3>';
+	    		document.getElementById("wifi_status").innerHTML = c;
+	    		
+	    		var reloadStatus = setTimeout("loadWiFiConfg();", 500);
+			}
+		}		
+		
+		xmlhttp.open('GET','/config' + extfile + '?command=wifi');
+		xmlhttp.send();
+	}
+	
+	function loadHome()
+	{
+		var c = '';
+		
+	   c = '<div id="conn_status">';
+	   c += '<h3>Estado: </h3>';
+	   c += '</div>';
+	   c += '<div id="wifi_status">';
+	   c += '<h3>SSID: <br>IP: <br>Mask: <br>Gateway: </h3>';
+	   c += '</div>';
+	   c += '<hr/>';
+	   document.getElementById("div1").innerHTML = c;
+	       		
+	   c ='';
+	   c += '<div class="connect">';
+	   c += '<input class="inputSsidConnect" id="SsidConnect" placeholder="SSID" type="text" value="">';
+	   c += '<input class="inputPassConnect" id="PassConnect" placeholder="Contrase&#241;a" type="password" value="">';
+	   c += '<button class="buttonConnect" onclick="ConnectAP()"/>Conectar</button>';
+	   c += '</div>';
+	   c += '<hr/>';
+	   c += '<div class="scan">';
+	   c += '<button class="buttonScan" onclick="scanAP()">Scan</button>';
+	   c += '</div>';
+		c += '<table id="tableScan" summary="Result Scan AP">';
+		c += '<thead>';
+		c += '<tr>';
+		c += '<th scope="col" align="center">Selec.</th>';
+		c += '<th scope="col">SSID</th>';
+		c += '<th scope="col" align="center">Canal</th>';
+		c += '<th scope="col" align="center">Seg.</th>';
+		c += '</tr>';
+		c += '</thead>';
+		c += '<tbody>';
+		c += '<tr>';
+		c += '<td align="center"><input type="radio" disabled></td>';
+		c += '<td>---------</td>';
+		c += '<td align="center">--</td>';
+		c += '<td align="center">X</td>';
+		c += '</tr>';		
+		c += '</tbody>';
+		c += '</table>';
+	
+	   document.getElementById("div2").innerHTML = c;
+	   
+	   var xmlhttp;
+		xmlhttp=new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200)) {
+	    		var jsonResponse = xmlhttp.responseText;
+	    		var objeto_json = JSON.parse(jsonResponse);
+	    		var info_product = objeto_json.Device.product;
+	    		var info_manufacturer = objeto_json.Device.manufacturer;
+
+	    		document.getElementById("prod").innerHTML = info_product;
+	    		document.getElementById("manuf").innerHTML = info_manufacturer;	    			    		
+			}
+		}
+	
+		xmlhttp.open('GET','/client' + extfile + '?command=info');
+		xmlhttp.send();
+	   
+		loadStatus();	
+		loadWiFiConfg();
+	}
+</script>
+
+</head>
+	<body onload="loadHome();">
+		<header>
+			<div id="manuf">				
+			</div>
+			<div id="prod">
+			</div>
+			<div class="menu">						
+		</header>
+		<nav>
+			<a href="" id="home" onclick="loadHome(); return false;">Inicio</a>
+			<a href="" id="home" onclick="loadInfo(); return false;">Informaci&oacute;n</a>
+		</nav>
+		<div class="main">
+			<div id="div1"></div>
+			<div id="div2"></div>
+		</div>
+	</body>
+</html>
