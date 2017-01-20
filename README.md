@@ -2,8 +2,15 @@
 Well... that...
 
 ###Quick start:
-Spanish speakers: see CAN-104 at Cika website 
-English speakers: well, learn spanish... or just flash and try the following example:
+#####Spanish speakers:
+No es necesario compilar, ver CAN-104 en la web de Cika:  
+[Texto CAN-104] (http://cika.com/soporte/AppNotes/CAN-104_ESP-WROOM_WebSetup.pdf)  
+[Binario CAN-104] (http://cika.com/soporte/AppNotes/CAN-104_Software.zip)
+
+#####English speakers:
+Well, learn spanish... or compile... or just download
+the "Binario" above (for *binary*, you got it, didn't ya?), flash, and try the following example.
+
 ####E.g.:
 ```
 AT+CWMODE_CUR=2
@@ -11,13 +18,13 @@ AT+WEBDEV=”My Shop”,”My product”
 AT+WEBVER=”1.0”,”0.5”
 AT+WEBSTART
 ```
-Connect to the soft-AP
-Point your browser to 192.168.4.1
+Connect to the soft-AP  
+Point your browser to 192.168.4.1  
 ```
 AT+WEBSTS=somenumber
 ```
-Choose your AP and connect, wait for some activity on the AT port 
-and an IP to show on web browser screen
+Choose your AP and connect, wait for some activity on the AT port  
+and an IP to show on web browser screen  
 ```
 AT+WEBSTOP
 AT+CWMODE_DEF=1
@@ -42,4 +49,3 @@ in the form of attached patches or pull requests. PLEASE USE ENGLISH, so everyon
 can read about.
 You are welcome to contribute enhancements, however, we reserve the right to discuss
 them. You are free to fork the repository and have your own.
-
